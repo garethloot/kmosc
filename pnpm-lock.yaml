@@ -11,9 +11,15 @@ dependencies:
   '@electron-toolkit/utils':
     specifier: ^3.0.0
     version: 3.0.0(electron@28.2.4)
+  '@types/node-osc':
+    specifier: ^6.0.3
+    version: 6.0.3
   electron-updater:
     specifier: ^6.1.7
     version: 6.1.8
+  node-osc:
+    specifier: ^9.1.0
+    version: 9.1.0
 
 devDependencies:
   '@electron-toolkit/eslint-config-prettier':
@@ -976,6 +982,12 @@ packages:
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
     dev: true
 
+  /@types/node-osc@6.0.3:
+    resolution: {integrity: sha512-f0JUTDVAlk/mV9RH6jE6g/8Y7l+Mvi3f1x7xv0RG3VI1PktaXEd60mR+4plpMS9VbRovFoPsS7qaaIDhFXdaEw==}
+    dependencies:
+      '@types/node': 18.19.18
+    dev: false
+
   /@types/node@18.19.18:
     resolution: {integrity: sha512-80CP7B8y4PzZF0GWx15/gVWRrB5y/bIjNI84NK3cmQJu0WZwvmj2WMA5LcofQFVfLqqCSp545+U2LsrVzX36Zg==}
     dependencies:
@@ -1339,6 +1351,10 @@ packages:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
     dev: true
+
+  /binpack@0.1.0:
+    resolution: {integrity: sha512-KcSrsGiIKgklTWweVb9XnZPWO1/rGSsK3fwR7VnbDPbLKPlkvSKd/ZrJ1W712r6HzH5u0fa/AZCftATO09x8Aw==}
+    dev: false
 
   /bluebird-lst@1.0.9:
     resolution: {integrity: sha512-7B1Rtx82hjnSD4PGLAjVWeYH3tHAcVUmChh85a3lltKQm6FresXh9ErQo6oAv6CqxttczC3/kEg8SY5NluPuUw==}
@@ -2919,6 +2935,13 @@ packages:
     dev: true
     optional: true
 
+  /node-osc@9.1.0:
+    resolution: {integrity: sha512-7Ey92VAnGAkQI0MfxFH365v6+wUyHU/EVt5/v4Q81w8b+F/pVQxvmEzPnp70IxvDipSgYtSGer/iZUHZeKCzwg==}
+    engines: {node: ^18.17.0 || >=20.5.0}
+    dependencies:
+      osc-min: 1.1.2
+    dev: false
+
   /node-releases@2.0.14:
     resolution: {integrity: sha512-y10wOWt8yZpqXmOgRo77WaHEmhYQYGNA6y421PKsKYWEK8aW+cqAphborZDhqfyKrbZEN92CN1X2KbafY2s7Yw==}
     dev: true
@@ -2954,6 +2977,13 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
     dev: true
+
+  /osc-min@1.1.2:
+    resolution: {integrity: sha512-8DbiO8ME85R75stgNVCZtHxB9MNBBNcyy+isNBXrsFeinXGjwNAauvKVmGlfRas5VJWC/mhzIx7spR2gFvWxvg==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      binpack: 0.1.0
+    dev: false
 
   /p-cancelable@2.1.1:
     resolution: {integrity: sha512-BZOr3nRQHOntUjTrH8+Lh54smKHoHyur8We1V8DSMVrl5A2malOOwuJRnKRDjSnkoeBh4at6BwEnb5I7Jl31wg==}
