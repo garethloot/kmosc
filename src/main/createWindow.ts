@@ -1,10 +1,10 @@
-import { shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
 import { join } from 'path'
 
-const createWindow = (): void => {
+const createWindow = (): BrowserWindow => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -23,8 +23,9 @@ const createWindow = (): void => {
     return { action: 'deny' }
   })
 
-  mainWindow.once('ready-to-show', () => {
+  mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+    app.dock.show()
   })
 
   // HMR for renderer base on electron-vite cli.
@@ -34,6 +35,7 @@ const createWindow = (): void => {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+  return mainWindow
 }
 
 export default createWindow

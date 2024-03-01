@@ -1,3 +1,4 @@
+import '@picocss/pico'
 import './assets/main.css'
 
 import App from './App.svelte'

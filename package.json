@@ -1,9 +1,9 @@
 {
-  "name": "osc-server",
-  "version": "1.0.0",
-  "description": "An Electron application with Svelte and TypeScript",
+  "name": "KMOSC",
+  "version": "0.0.1",
+  "description": "Running Keyboards Maestro Macros with OSC",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": "Gareth Loot",
   "homepage": "https://electron-vite.org",
   "scripts": {
     "format": "prettier --plugin prettier-plugin-svelte --write .",
@@ -16,13 +16,26 @@
     "build": "npm run typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
-    "build:win": "npm run build && electron-builder --win",
-    "build:mac": "npm run build && electron-builder --mac",
-    "build:linux": "npm run build && electron-builder --linux"
+    "build:mac": "npm run build && electron-builder --mac"
+  },
+  "build": {
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": "x64"
+        },
+        {
+          "target": "dmg",
+          "arch": "arm64"
+        }
+      ]
+    }
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
+    "@picocss/pico": "^2.0.3",
     "@types/node-osc": "^6.0.3",
     "electron-updater": "^6.1.7",
     "node-osc": "^9.1.0"

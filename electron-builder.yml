@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: osc-server
+appId: nl.garethloot.KMOSC
+productName: KMOSC
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: osc-server
+  executableName: KMOSC
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

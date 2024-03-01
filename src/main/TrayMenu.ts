@@ -1,5 +1,5 @@
 import { app, Tray, Menu, nativeImage } from 'electron'
-import icon from '../../resources/handshake-solid.png?asset'
+import icon from '../../resources/tray.png?asset'
 import createWindow from './createWindow'
 
 class TrayMenu {
