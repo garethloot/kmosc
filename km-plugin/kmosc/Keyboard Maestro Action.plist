@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Name</key>
+	<string>Send OSC message</string>
+	<key>Script</key>
+	<string>Action.jxa</string>
+	<key>Icon</key>
+	<string>Icon.png</string>
+	<key>Title</key>
+	<string>Send message to: ‘%Param%Address%’:‘%Param%Port%’ ‘%Param%Address%’ ‘%Param%Value%’</string>
+	<key>Results</key>
+	<string>None</string>
+	<key>Timeout</key>
+	<integer>120</integer>
+	<key>Author</key>
+	<string>Gareth Loot</string>
+	<key>Help</key>
+	<string>This will send a OSC message using KMOSC</string>
+	<key>Parameters</key>
+	<array>
+		<dict>
+			<key>Label</key>
+			<string>Host</string>
+			<key>Type</key>
+			<string>String</string>
+			<key>Default</key>
+			<string>0.0.0.0</string>
+		</dict>
+    	<dict>
+			<key>Label</key>
+			<string>Port</string>
+			<key>Type</key>
+			<string>String</string>
+			<key>Default</key>
+			<string>5555</string>
+		</dict>
+    <dict>
+			<key>Label</key>
+			<string>Address</string>
+			<key>Type</key>
+			<string>String</string>
+			<key>Default</key>
+			<string>/</string>
+		</dict>
+    <dict>
+			<key>Label</key>
+			<string>Value</string>
+			<key>Type</key>
+			<string>String</string>
+		</dict>
+	</array>
+</dict>
+</plist>

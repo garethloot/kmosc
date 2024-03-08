@@ -16,7 +16,8 @@
     "build": "npm run typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
-    "build:mac": "npm run build && electron-builder --mac"
+    "build:mac": "npm run build && electron-builder --mac",
+    "zip": "cd km-plugin && zip -r kmosc.zip ./kmosc/"
   },
   "build": {
     "mac": {
@@ -29,6 +30,12 @@
           "target": "dmg",
           "arch": "arm64"
         }
+      ]
+    },
+    "protocols": {
+      "name": "kmosc",
+      "schemes": [
+        "kmosc"
       ]
     }
   },

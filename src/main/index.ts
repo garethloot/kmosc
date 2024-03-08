@@ -3,6 +3,26 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import TrayMenu from './TrayMenu'
 import OSCServer from './OSCServer'
 import Preferences from './preferences'
+import { resolve } from 'path'
+import { dialog } from 'electron'
+import { parse } from 'url'
+
+if (process.defaultApp) {
+  if (process.argv.length >= 2) {
+    app.setAsDefaultProtocolClient('kmosc', process.execPath, [resolve(process.argv[1])])
+  }
+} else {
+  app.setAsDefaultProtocolClient('kmosc')
+}
+
+app.on('open-url', (_, url) => {
+  const URI = parse(url, true)
+
+  dialog.showErrorBox(
+    'Welcome Back',
+    `You arrived from: ${URI.pathname}, ${URI.hostname}, ${URI.port}, ${URI.query.value}`
+  )
+})
 
 app.whenReady().then(() => {
   // Set app user model id for windows
