@@ -1,5 +1,6 @@
 import { Server } from 'node-osc'
 import { runMacro } from './macro'
+import Preferences from './preferences'
 
 const createOSCServer = (port: number): Server => {
   const oscServer = new Server(port, '0.0.0.0', () => {
@@ -10,34 +11,33 @@ const createOSCServer = (port: number): Server => {
 }
 
 class OSCServer {
-  private oscServer: Server
-  private slashRequired: boolean
+  private server: Server
+  private preferences: Preferences
 
-  constructor(port: number, slashRequired: boolean) {
-    this.slashRequired = slashRequired
-    this.oscServer = createOSCServer(port)
+  constructor(preferences: Preferences) {
+    this.preferences = preferences
+    this.server = createOSCServer(this.preferences.port)
     this.handleOSCMessage()
   }
 
   private handleOSCMessage(): void {
-    this.oscServer.on('message', (msg) => {
+    this.server.on('message', (msg) => {
       const [address, ...args] = msg
-      const macroName = this.slashRequired ? address : address.substring(1)
+      const macroName = this.preferences.slashRequired ? address : address.substring(1)
       const parameters = args.join(',')
       console.log(`Running macro: ${macroName} with parameters: ${parameters}`)
       runMacro(macroName, parameters)
     })
   }
 
-  changePreferences(port: number, slashRequired: boolean): void {
-    this.slashRequired = slashRequired
-    this.oscServer.close()
-    this.oscServer = createOSCServer(port)
+  restart(): void {
+    this.server.close()
+    this.server = createOSCServer(this.preferences.port)
     this.handleOSCMessage()
   }
 
   close(): void {
-    this.oscServer.close()
+    this.server.close()
   }
 }
 

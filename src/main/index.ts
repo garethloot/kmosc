@@ -1,11 +1,10 @@
 import { app, ipcMain } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import TrayMenu from './TrayMenu'
-import OSCServer from './OSCServer'
-import Preferences from './preferences'
 import { resolve } from 'path'
-import { dialog } from 'electron'
-import { parse } from 'url'
+import Preferences from './preferences'
+import OSCServer from './OSCServer'
+import OSCClient from './OSCClient'
 
 if (process.defaultApp) {
   if (process.argv.length >= 2) {
@@ -15,51 +14,29 @@ if (process.defaultApp) {
   app.setAsDefaultProtocolClient('kmosc')
 }
 
-app.on('open-url', (_, url) => {
-  const URI = parse(url, true)
-
-  dialog.showErrorBox(
-    'Welcome Back',
-    `You arrived from: ${URI.pathname}, ${URI.hostname}, ${URI.port}, ${URI.query.value}`
-  )
-})
-
 app.whenReady().then(() => {
-  // Set app user model id for windows
-  const preferences = new Preferences()
   electronApp.setAppUserModelId('nl.garethloot.KMOSC')
   app.dock.hide()
 
-  const oscServer = new OSCServer(preferences.port, preferences.slashRequired)
-
-  app.on('browser-window-created', (_, window) => {
-    optimizer.watchWindowShortcuts(window)
-  })
-
-  app.on('will-quit', () => {
-    oscServer.close()
-  })
+  const preferences = new Preferences()
+  const oscServer = new OSCServer(preferences)
+  new OSCClient()
+  new TrayMenu()
 
   ipcMain.on('changePort', (_, arg) => {
     preferences.port = arg
-    oscServer.changePreferences(preferences.port, preferences.slashRequired)
     preferences.write()
+    oscServer.restart()
   })
 
   ipcMain.on('changeSlash', (_, arg) => {
     preferences.slashRequired = arg
-    oscServer.changePreferences(preferences.port, preferences.slashRequired)
     preferences.write()
+    oscServer.restart()
   })
 
-  ipcMain.on('changeOpenAtLogin', (_, arg) => {
-    preferences.openAtLogin = arg
-    app.setLoginItemSettings({ openAtLogin: arg })
-    preferences.write()
-  })
-
-  ipcMain.handle('getPreferences', () => {
-    return preferences
+  app.on('browser-window-created', (_, window) => {
+    optimizer.watchWindowShortcuts(window)
   })
 
   app.on('window-all-closed', () => {
@@ -69,5 +46,7 @@ app.whenReady().then(() => {
     }
   })
 
-  new TrayMenu()
+  app.on('will-quit', () => {
+    oscServer.close()
+  })
 })

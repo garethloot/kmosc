@@ -6,8 +6,9 @@ const host = app.systemAttribute('KMPARAM_Host')
 const port = app.systemAttribute('KMPARAM_Port')
 const address = app.systemAttribute('KMPARAM_Address')
 const value = app.systemAttribute('KMPARAM_Value')
+const valueType = app.systemAttribute('KMPARAM_ValueType')
 
-const url = `kmosc://${host}:${port}${address}?value=${value}`
+const url = `kmosc://${host}:${port}${address}?value=${value}&valueType=${valueType}`
 
 // open a url in the default browser
 try {

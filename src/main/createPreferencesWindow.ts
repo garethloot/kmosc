@@ -1,10 +1,9 @@
 import { app, shell, BrowserWindow } from 'electron'
 import { is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-
 import { join } from 'path'
 
-const createWindow = (): BrowserWindow => {
+const createPreferencesWindow = (): BrowserWindow => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -38,4 +37,4 @@ const createWindow = (): BrowserWindow => {
   return mainWindow
 }
 
-export default createWindow
+export default createPreferencesWindow

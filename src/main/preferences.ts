@@ -1,5 +1,5 @@
+import { ipcMain, app } from 'electron'
 import { readFileSync, writeFileSync } from 'fs'
-import { app } from 'electron'
 import { join } from 'path'
 import { PreferencesJSON } from '../shared/types'
 
@@ -21,6 +21,20 @@ class Preferences {
     this.port = preferences.port
     this.slashRequired = preferences.slashRequired
     this.openAtLogin = preferences.openAtLogin
+
+    this.handleIpc()
+  }
+
+  handleIpc(): void {
+    ipcMain.on('changeOpenAtLogin', (_, arg) => {
+      this.openAtLogin = arg
+      this.write()
+      app.setLoginItemSettings({ openAtLogin: arg })
+    })
+
+    ipcMain.handle('getPreferences', () => {
+      return this.getPreferences()
+    })
   }
 
   read(): PreferencesJSON {
