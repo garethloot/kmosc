@@ -1,15 +1,10 @@
 <script lang="ts">
   import { type PreferencesJSON } from '../../shared/types'
 
-  window.electron.ipcRenderer.on('log-item', (_, message) => {
-    console.log(message)
-  })
-
   let preferences: PreferencesJSON
 
   const getPreferences = (): void => {
     window.electron.ipcRenderer.invoke('getPreferences').then((res: PreferencesJSON) => {
-      console.log(res)
       preferences = res
     })
   }

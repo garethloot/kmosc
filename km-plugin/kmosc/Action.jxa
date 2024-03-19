@@ -8,9 +8,6 @@ const address = app.systemAttribute('KMPARAM_Address')
 const value = app.systemAttribute('KMPARAM_Value')
 const valueType = app.systemAttribute('KMPARAM_ValueType')
 
-const url = `kmosc://${host}:${port}${address}?value=${value}&valueType=${valueType}`
+const command = `/Applications/KMOSC.app/Contents/MacOS/KMOSC send ${host} ${port} "${address}" ${valueType} ${value}`
 
-// open a url in the default browser
-try {
-  app.openLocation(url)
-} catch (error) {}
+app.doShellScript(command)

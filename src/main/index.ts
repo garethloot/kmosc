@@ -1,26 +1,23 @@
 import { app, ipcMain } from 'electron'
-import { electronApp, optimizer } from '@electron-toolkit/utils'
+import { optimizer } from '@electron-toolkit/utils'
 import TrayMenu from './TrayMenu'
-import { resolve } from 'path'
 import Preferences from './preferences'
 import OSCServer from './OSCServer'
-import OSCClient from './OSCClient'
+import { runCLI } from './runCLI'
 
-if (process.defaultApp) {
-  if (process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient('kmosc', process.execPath, [resolve(process.argv[1])])
+const checkIfCalledViaCLI = (args): boolean => {
+  if (!app.isPackaged) return false
+  if (args && args.length > 1) {
+    return true
   }
-} else {
-  app.setAsDefaultProtocolClient('kmosc')
+  return false
 }
 
-app.whenReady().then(() => {
-  electronApp.setAppUserModelId('nl.garethloot.KMOSC')
+const runApp = (): void => {
   app.dock.hide()
 
   const preferences = new Preferences()
   const oscServer = new OSCServer(preferences)
-  new OSCClient()
   new TrayMenu()
 
   ipcMain.on('changePort', (_, arg) => {
@@ -49,4 +46,13 @@ app.whenReady().then(() => {
   app.on('will-quit', () => {
     oscServer.close()
   })
+}
+
+app.whenReady().then(() => {
+  const cli = checkIfCalledViaCLI(process.argv)
+  if (cli) {
+    runCLI()
+  } else {
+    runApp()
+  }
 })
